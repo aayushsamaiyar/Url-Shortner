@@ -19,5 +19,21 @@ app.post('/shortUrls', async (req,res) => {
     await ShortUrl.create({ full: req.body.fullUrl })
     res.redirect('/')
 })
+
+app.get('/:id', (req, res) => {
+    ShortUrl.findOne({
+        short: req.params.id
+    }, (err, post) => {
+        if (post != null) {
+            if (!err) {
+                res.redirect(post.full)
+            } else {
+                res.redirect('/')
+            }
+        } else {
+            res.redirect('/')
+        }
+    })
+})
  
 app.listen(process.env.PORT || 3000);
