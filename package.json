@@ -4,9 +4,9 @@
   "description": "url shortner app",
   "main": "index.js",
   "scripts": {
-    "devStart": "nodemon server.js"
+    "Start": "nodemon server.js"
   },
-  "author": "",
+  "author": "Aayush Samaiyar",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
