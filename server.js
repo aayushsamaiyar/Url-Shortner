@@ -12,14 +12,19 @@ app.set('view engine', 'ejs')
 app.use(express.urlencoded({ extended: false }))
 
 app.get('/',async (req,res) => {
-    const shortUrls = await ShortUrl.find() 
-    res.render('index',{ ShortUrls: shortUrls })
+    const shortUrls = await ShortUrl.find({}).then((shortUrls)=>{
+        res.render('index',{
+            shortUrls
+        })
+    }).catch(() => {
+        res.redirect('/')
+    }) 
 })
 
 app.post('/shortUrls', async (req,res) => {
-    await ShortUrl.create({ full: req.body.fullUrl })
+    await ShortUrl.create({ full: req.body.fullurl })
     res.redirect('/')
-})
+});
 
 app.get('/:shorturl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl})
@@ -29,4 +34,6 @@ app.get('/:shorturl', async (req, res) => {
     res.redirect(shortUrl.full)
 })
  
-app.listen(process.env.PORT || 5000);
+app.listen(process.env.PORT || 3000, () =>{
+    console.log('server started on localhost:3000')
+});
