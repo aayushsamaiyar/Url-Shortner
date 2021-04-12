@@ -1,10 +1,12 @@
+require('dotenv').config();
 const express = require('express')
 const mongoose = require('mongoose')
 const ShortUrl = require('./models/shortUrl')
 const app = express()
 
-mongoose.connect('mongodb://localhost:27017/urlsShortner', {
-    useNewUrlParser:true, useUnifiedTopology: true
+mongoose.connect('mongodb://localhost/urlsShortner', {
+    useNewUrlParser:true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: true}, () => {
+        console.log('connected to database.')
 })
 
 app.set('view engine', 'ejs')
@@ -28,7 +30,7 @@ app.post('/shortUrls', async (req,res) => {
 
 app.get('/:shorturl', async (req, res) => {
     const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl})
-    if (shortUrl == null) return res.sendStstus(404)
+    if (shortUrl == null) return res.sendStatus(404);
     shortUrl.clicks++
     shortUrl.save()
     res.redirect(shortUrl.full)
