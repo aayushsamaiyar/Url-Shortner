@@ -2,8 +2,10 @@
 An app to shorten your URL's.
 built over ejs, nodejs, express and mongodb.
 
-# download 
-install all the dependencies by typing 
-npm install
 # to run server
-type npm start
+
+install all the dependencies by typing -
+npm install
+
+And start the server by typing - 
+npm start
